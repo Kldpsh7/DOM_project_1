@@ -67,3 +67,13 @@ titles[0].style.color='green';
 
 //Adding border in header
 document.getElementById('main-header').style.borderBottom='3px solid black';
+
+//Make the 3 rd element in the list have green background color
+let li=document.getElementsByTagName('li');
+li[2].style.backgroundColor='green';
+
+//Make all the elements in the list have bold color font
+for (let index = 0; index < li.length; index++) {
+    li[index].style.fontWeight='bold';
+    
+}
