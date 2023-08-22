@@ -54,7 +54,7 @@ li[0].style.fontWeight='Bold' //made li[0] text bold
 for (let index = 0; index < li.length; index++) {
     li[index].style.backgroundColor='purple';   
 }
-*/
+
 
 
 //making ADD ITEM bold and green
@@ -91,7 +91,7 @@ console.log(Tag); //New item can be selected by tag name
 //Changing its text
 Tag[4].innerText='Newly created'; //Successfully done
 
-/*
+
 //QUERYSELECTOR (selects only first element)
 let header=document.querySelector('#main-header'); //selecting single item header
 header.style.borderBottom='5px solid black'; //applying bottom border to it
@@ -109,7 +109,7 @@ submit.value='click'; //changing value of submit to click
 let lstitem=document.querySelector('.list-group-item'); //selects first item
 lstitem.style.color='green'; //changing its color
 
-*/
+
 
 //selecting nth list item with querySelector
 let seconditem=document.querySelector('.list-group-item:nth-child(2)');
@@ -119,7 +119,7 @@ let thirditem=document.querySelector('.list-group-item:nth-child(3)');
 //making this item invisible
 thirditem.style.visibility='hidden';
 
-/*
+
 //QUERRYSELECTORALL (selects all matching query)//
 let title = document.querySelectorAll('.title');
 console.log(titles)
@@ -130,7 +130,7 @@ let odd=document.querySelectorAll('li:nth-child(odd)');
 for (let index = 0; index < odd.length; index++) {
     odd[index].style.fontSize='32px';  
 }
-*/
+
 
 //making font color of 2nd item green
 let allitems=document.querySelectorAll('.list-group-item');
@@ -140,3 +140,105 @@ allitems[1].style.color='green';
 for (let index = 0; index < allitems.length; index+=2) {
     allitems[index].style.backgroundColor='green';
 }
+
+
+//TRAVERSING THE DOM //
+
+
+//Parent node
+let itemlist = document.querySelector('#items');
+console.log(itemlist.parentNode); //getting parend node of itemlist
+itemlist.parentNode.style.backgroundColor='#000000'; //changing background color of parent node
+console.log(itemlist.parentNode.parentNode); //getting parent node of parent node
+itemlist.parentNode.parentNode.style.backgroundColor='green'; //changing its color
+//we can keep chaining for parents and childs of nodes
+
+//Parent element (similar to parent node)
+console.log(itemlist.parentElement);
+console.log(itemlist.parentElement.parentElement);
+
+//childNodes
+console.log(itemlist.childNodes); //getting childNodes (text nodes are here for white spaces such as line break in html code)
+//childNodes is less appriciated due to its tendency to show white spaces, so we use
+
+//children
+console.log(itemlist.children); //gives HTML collection (childNodes gave node list) of all the children without any white spaces
+console.log(itemlist.children[1]); //getting first child
+itemlist.children[1].style.backgroundColor='red'; //changing child's color
+
+//firstChild (gives first child, includes white spaces)
+console.log(itemlist.firstChild); //gives text node
+
+//firstElementChild (dont return white spaces)
+console.log(itemlist.firstElementChild); //goves first list item
+itemlist.firstElementChild.textContent='Hello first child'
+
+//lastChild (same as firstChild for last child)
+console.log(itemlist.lastChild); //gives text node
+
+//lastElementChild (dont return white spaces)
+console.log(itemlist.lastElementChild); //goves last list item
+itemlist.lastElementChild.textContent='Hello last child'
+
+//nextSibling (gives next sibling, considers white spaces)
+console.log(itemlist.nextSibling); //gives text node
+//previousSibling (gives previous sibling, considers white spaces)
+console.log(itemlist.previousSibling); //gives text node
+
+//nextElementSibling (gives next sibling, without white spaces)
+console.log(itemlist.nextElementSibling); //gives null as there is no next sibling
+//previousElementSibling (gives previous sibling, without white spaces)
+console.log(itemlist.previousElementSibling); //gives previous sibling
+
+
+//Creating Elements
+
+//Creating a div
+let newDiv = document.createElement('div'); //created a new div in doc
+
+//adding class
+newDiv.className='hello'; 
+//add id
+newDiv.id='helloId'
+//add attr
+newDiv.setAttribute('title','hello div');
+
+//Adding text to newDiv
+//creating text node
+let newTextNode=document.createTextNode('This is the new text node');
+//add text to newDiv
+newDiv.appendChild(newTextNode);
+console.log(newDiv);
+//add newDiv to document
+let container=document.querySelector('header .container'); //selecting container where newDiv will be inserted
+let h1=document.querySelector('header h1'); //Selecting elemenst before/after which newDiv will be inserted inside container
+
+container.insertBefore(newDiv,h1);
+newDiv.style.fontSize='25px'; //peoperties of newDiv can be changed after its addition to document
+*/
+
+// adding hello word in header before item lister
+// creating a div
+let div1=document.createElement('div');
+//creating a text node
+let text1=document.createTextNode('Hello World');
+//Adding text Node to div
+div1.appendChild(text1);
+//Creating object of header and h1
+let header= document.querySelector('header .container'); //div will be inserted here
+let itemLister=document.querySelector('header h1'); //div will be inserted before this
+//inserting div
+header.insertBefore(div1,itemLister);
+
+//adding hello world befire item 1 in items
+//creating new list item
+let l1=document.createElement('li');
+//we will add already created text node in previous step to l1
+l1.appendChild(text1);
+//adding same calss to l1 as other items
+l1.className='list-group-item'
+//grabbing ul and item 1
+let List=document.querySelector('.list-group');
+let item1=List.firstElementChild;
+//inserting new item
+List.insertBefore(l1,item1);
