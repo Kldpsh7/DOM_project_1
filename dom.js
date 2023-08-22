@@ -77,3 +77,16 @@ for (let index = 0; index < li.length; index++) {
     li[index].style.fontWeight='bold';
     
 }
+
+//Trying to get newly created list item by class name
+let Class=document.getElementsByClassName('list-group-item');
+console.log(Class);
+
+//Newly created item is not is Class collection because the class name dont apply to it
+
+//Trying to get newly created list item by Tag name
+let Tag=document.getElementsByTagName('li');
+console.log(Tag); //New item can be selected by tag name
+
+//Changing its text
+Tag[4].innerText='Newly created'; //Successfully done
