@@ -90,3 +90,53 @@ console.log(Tag); //New item can be selected by tag name
 
 //Changing its text
 Tag[4].innerText='Newly created'; //Successfully done
+
+/*
+//QUERYSELECTOR (selects only first element)
+let header=document.querySelector('#main-header'); //selecting single item header
+header.style.borderBottom='5px solid black'; //applying bottom border to it
+
+let input=document.querySelector('input'); //selecting input field
+input.value='Hello'; //changing value of input
+
+// second input (button is not selected as querrySelector only selects first occurence of query)
+
+// selecting submit button with querySekector
+let submit=document.querySelector('input[type="submit"]');
+submit.value='click'; //changing value of submit to click
+
+//selecting list items with querySelector
+let lstitem=document.querySelector('.list-group-item'); //selects first item
+lstitem.style.color='green'; //changing its color
+
+*/
+
+//selecting nth list item with querySelector
+let seconditem=document.querySelector('.list-group-item:nth-child(2)');
+seconditem.style.backgroundColor='green'; //making background green for 2nd item
+
+let thirditem=document.querySelector('.list-group-item:nth-child(3)');
+//making this item invisible
+thirditem.style.visibility='hidden';
+
+/*
+//QUERRYSELECTORALL (selects all matching query)//
+let title = document.querySelectorAll('.title');
+console.log(titles)
+title[0].textContent='Hello world!'
+
+//change something in alternating items (color or style) of list of items
+let odd=document.querySelectorAll('li:nth-child(odd)');
+for (let index = 0; index < odd.length; index++) {
+    odd[index].style.fontSize='32px';  
+}
+*/
+
+//making font color of 2nd item green
+let allitems=document.querySelectorAll('.list-group-item');
+allitems[1].style.color='green';
+
+//making background of odd items green
+for (let index = 0; index < allitems.length; index+=2) {
+    allitems[index].style.backgroundColor='green';
+}
