@@ -215,7 +215,7 @@ let h1=document.querySelector('header h1'); //Selecting elemenst before/after wh
 
 container.insertBefore(newDiv,h1);
 newDiv.style.fontSize='25px'; //peoperties of newDiv can be changed after its addition to document
-*/
+
 
 // adding hello word in header before item lister
 // creating a div
@@ -242,3 +242,229 @@ let List=document.querySelector('.list-group');
 let item1=List.firstElementChild;
 //inserting new item
 List.insertBefore(l1,item1);
+
+
+
+//EVENTS//
+
+
+//adding event listner to button
+let button=document.getElementById('button').addEventListener('click',buttonClick);
+
+// this function gets called when click here the button is pressed
+// we can use eventListner for the job or onClick=buttonClick()
+function buttonClick(event){
+    console.log('button is pressed')
+    document.getElementById('header-title').textContent='Button Clicked';
+    document.title='kuldeep'
+
+        let newItem=document.createElement('li');
+        newItem.className='list-group-item';
+        newItem.appendChild(document.createTextNode('New Item'));
+        document.getElementById('items').appendChild(newItem);
+
+    console.log(event.target); //gives event target
+    console.log(event.target.className); //gives class of target
+    console.log(event.target.id); //Gives ID of event target
+    console.log(event.target.classList); //Gives list of all the classes applied to event target
+
+        //displaying any of the above methods output on the page
+        let output=document.createElement('div');
+        output.id='output';
+        output.innerHTML='<h1>'+event.target.classList+'</h1>';
+        document.getElementById('main').appendChild(output);
+
+    //Event Type
+    console.log(event.type); //Gives click as we are listning for click event
+
+        //positon of mouse pionter
+        console.log(event.clientX); //X-axis position wrt window
+        console.log(event.clientY); //Y-axis position wrt window
+
+        console.log(event.offsetX); //X-axis position wrt element itself
+        console.log(event.offsetY); //Y-axis position wrt element itself
+
+
+    //keypress status
+    console.log(event.altKey); //returns true of alt key is pressed while the event occured else false
+    console.log(event.ctrlKey); //returns true of ctrl key is pressed while the event occured else false
+    console.log(event.shiftKey); //returns true of shift key is pressed while the event occured else false
+}
+
+
+
+// EVENTS TYPES //
+
+
+
+let button=document.getElementById('button'); 
+
+function runEvent(evnt){             //function gets called on event
+    console.log(evnt.type);
+}
+    
+
+    //click event
+    button.addEventListener('click',runEvent);
+
+    //double click
+    button.addEventListener('dblclick',runEvent);
+
+    //Mousedown => as soon as button is pressed, before even button lifts
+    button.addEventListener('mousedown',runEvent);
+
+    //Mouseup => waits for mose button to lift up
+    button.addEventListener('mouseup',runEvent);
+
+    //Mouseenter => triggered when mouse enters element
+    button.addEventListener('mouseenter',runEvent);
+
+    //Mouseleave => triggered when mouse leaves element
+    button.addEventListener('mouseleave',runEvent);
+
+    //Mouseover => when mouse is hovered over element
+    button.addEventListener('mouseover',runEvent);
+
+    //Mouseout => when mouse leaves element
+    button.addEventListener('mouseout',runEvent);
+
+
+            //Creating a box and changing its background color as mouse moves over it
+            let box=document.createElement('div');
+            box.style='width:500px; height:200px; background:#f4f4f4';
+            document.getElementById('main').appendChild(box);
+
+            box.addEventListener('mousemove',boxEvent);  //mousemove event constantly gracks movement of mouse pointer
+
+            function boxEvent(e){
+                box.style.backgroundColor="rgb("+e.offsetX+","+e.offsetY+",126)";
+
+                //adding mouse pointer location as text in the box itself
+
+                box.innerHTML='<h3> x:'+e.offsetX+'</h3><h3> y:'+e.offsetY+'</h3';
+            }
+
+
+//input events
+
+let itemInput=document.querySelector('input[type="text"]');
+let form=document.querySelector('form');
+
+itemInput.addEventListener('keydown',runEvent);  //anytime any key on itemInput form keyboard is pressed it triggers this event
+itemInput.addEventListener('keyup',runEvent); 
+itemInput.addEventListener('keypress',runEvent); 
+
+itemInput.addEventListener('focus',runEvent); //when input field is in focus
+itemInput.addEventListener('blur',runEvent); //opposite of focus
+
+itemInput.addEventListener('cut',runEvent); //when entered text is cut
+itemInput.addEventListener('copy',runEvent); //when entered text is copied
+itemInput.addEventListener('paste',runEvent); //when entered text is pasted
+
+itemInput.addEventListener('input',runEvent); //when anything is dne with input (key,cut,paste etc.)
+
+            //inserting select item besides input field
+            let select=document.createElement('select');
+            let option4=document.createElement('option');
+            option4.innerText='select';
+            select.appendChild(option4);
+            let option1=document.createElement('option');
+            option1.innerText='Item 1';
+            select.appendChild(option1);
+            let option2=document.createElement('option');
+            option2.innerText='Item 2';
+            select.appendChild(option2);
+            let option3=document.createElement('option');
+            option3.innerText='Item 3';
+            select.appendChild(option3);
+
+            select.style.marginRight='5px';
+            form.insertBefore(select,form.lastElementChild);
+
+            //adding event listner for select element
+            select.addEventListener('change',runEvent);
+
+
+function runEvent(e){
+    console.log(e.type)
+    console.log(e.target.value);
+
+}
+
+//Submit event
+form.addEventListener('submit',Submit);
+function Submit(e){
+    e.preventDefault();
+    console.log(e.type);
+}
+*/
+
+
+//ADDING DELETE BUTTON TO UL ITEMS //
+
+let delBtn=document.createElement('button'); //creating button element
+delBtn.className='btn btn-danger btn-sm float-right delete'; //giving bootstrap class to button
+delBtn.innerText='X'; //value
+
+let Ul=document.querySelector('ul'); //Grabbig UL
+
+//adding button to each child of UL by looping
+for (let index = 0; index < Ul.children.length; index++) {
+    Ul.children[index].appendChild(delBtn.cloneNode(true));
+}
+
+//ADDING EDIT BUTTON//
+
+let edit=document.createElement('button');
+edit.className='btn btn-danger btn-sm float-right edit';
+edit.innerText='Edit';
+edit.style.marginRight='3px';
+
+for (let index = 0; index < Ul.children.length; index++) {
+    Ul.children[index].appendChild(edit.cloneNode(true));
+    
+}
+
+//adding delete and edit fucntionality whren delete button is pressed
+
+Ul.addEventListener('click',deleteitem); //add event listner to ul to listen for click and call deleteitem function
+                                         //above event is called when we click anywhere on list items,
+                                         //but we want that only on button click
+                                         //so we add an if statement to event
+
+function deleteitem(e){
+ if (e.target.classList.contains('delete')){  //button has class delete
+    if (confirm('You Really Want to Delete This?')){
+        Ul.removeChild(e.target.parentElement);
+    }
+ }
+
+ if (e.target.classList.contains('edit'))(   //button has edit class
+    e.target.parentElement.firstChild.nodeValue=prompt('Enter new value')
+ )
+}
+
+//ADDING ITEMS TO UL WHEN SUBMIT IS PRESSED
+
+let form=document.querySelector('form'); //grabbing form
+
+form.addEventListener('submit',addItem); //listening to submit event
+
+function addItem(e){
+    e.preventDefault()              //preventing default
+
+    if (e.target.firstElementChild.value===''){
+        alert('empty input')
+    }
+    else{
+        let inp=e.target.firstElementChild.value; //getting input text
+        li=document.createElement('li'); //creating new list item
+        li.className='list-group-item'; //add class to it
+        li.innerText=inp;                //adding entered text to it
+        li.appendChild(delBtn.cloneNode(true)) //adding delete button to it
+        li.appendChild(edit.cloneNode(true)) //adding edit button to it
+        Ul.appendChild(li);               //Adding new item
+        e.target.firstElementChild.value=''; //making input field clear
+    }
+}
+
