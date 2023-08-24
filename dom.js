@@ -439,9 +439,9 @@ function deleteitem(e){
     }
  }
 
- if (e.target.classList.contains('edit'))(   //button has edit class
+ if (e.target.classList.contains('edit')){ //button has edit class
     e.target.parentElement.firstChild.nodeValue=prompt('Enter new value')
- )
+ }
 }
 
 //ADDING ITEMS TO UL WHEN SUBMIT IS PRESSED
@@ -460,11 +460,81 @@ function addItem(e){
         let inp=e.target.firstElementChild.value; //getting input text
         li=document.createElement('li'); //creating new list item
         li.className='list-group-item'; //add class to it
-        li.innerText=inp;                //adding entered text to it
+        li.innerText=`${inp}\n${dscr.value}`;                //adding entered text to it (+ description)
         li.appendChild(delBtn.cloneNode(true)) //adding delete button to it
         li.appendChild(edit.cloneNode(true)) //adding edit button to it
         Ul.appendChild(li);               //Adding new item
         e.target.firstElementChild.value=''; //making input field clear
+        dscr.value='';
     }
 }
 
+//ADDING FILTER//
+
+let header=document.querySelector('#main-header'); //Grabbing header container
+
+//Creating row div element to keep item lister and filter side by side
+let row=document.createElement('div');
+row.className='row';
+
+//making item lister a child of row
+header.firstElementChild.firstElementChild.className='col-md-6'; //giving it class name
+row.appendChild(header.firstElementChild.firstElementChild);
+
+//appending row to header container
+header.firstElementChild.appendChild(row); 
+
+let filter=document.createElement('input'); //creating a filter object
+filter.type='text'; //setting its type
+filter.className='form-control col-md-6 align-self-center'; //setting class name for filter
+filter.placeholder='Search Items....'; //adding placeholder
+
+header.firstElementChild.firstElementChild.appendChild(filter); //appending newDiv to header
+
+//Adding filter functionality
+filter.addEventListener('keyup',search); //addign keydup eventlistner
+
+function search(e){
+    let text=e.target.value.toLowerCase(); //gettin text in filter
+
+    let items=Ul.getElementsByTagName('li') //getting all lits items, return HTML collection 
+    //convertinr HTML collection into an array
+    Array.from(items).forEach(function(item){
+
+        //adding extra dunctionality to compare dicsription text also after line break
+        let itemName='';
+        if (item.firstChild.nextSibling.nextSibling.tagName=='BUTTON'){
+            itemName=item.firstChild.textContent;
+        }
+        else{
+            itemName=item.firstChild.textContent+item.firstChild.nextSibling.nextSibling.textContent;
+        }
+        //based on condition above, filter will see on two possible text values
+
+        if(itemName.toLowerCase().indexOf(text) !=-1){ //checking if anything in
+                                                       //filter matches lower case of 
+                                                       //list items
+            item.style.display='block'   //if it matches filter, display it
+        }
+        else{
+            item.style.display='none'    //make it invisible
+        }
+    })
+
+
+}
+
+//adding dicription input box to form
+
+let dscr=document.createElement('input'); //creating new input tag
+dscr.className='form-control me-2';
+dscr.id='dscr';
+dscr.style.marginRight='8px';
+
+//adding description input box to form
+form.insertBefore(dscr,form.lastElementChild);
+
+//adding placeholder to both the input fields
+let inputfields=document.querySelectorAll('input');
+inputfields[1].placeholder='Item Name';
+inputfields[2].placeholder='Description';
